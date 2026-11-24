@@ -20,7 +20,8 @@ What the build needs, from `CMakeLists.txt` and `pyproject.toml`:
 | zlib headers and library | at `find_package(ZLIB REQUIRED)` | Debian/Ubuntu: `apt install zlib1g-dev`. Fedora/RHEL: `dnf install zlib-devel`. macOS: included with the Xcode command-line tools. |
 | Python >= 3.9 | pip refuses to install | use a newer Python |
 
-Windows is not supported. Linux and macOS are.
+Linux is supported and tested (GCC 13 on Ubuntu 24.04, GCC 15 on Ubuntu 26.04, and the manylinux
+wheel images). The macOS build currently fails and is not supported yet. Windows is not supported.
 
 Indri 5.21 is pre-C++11 code. `CMakeLists.txt` builds it as `gnu++11` and builds the binding
 as C++14. Do not force `-std=c++17` through `CXXFLAGS`, because Indri's sources do not compile

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.1 (2026-11-24)
+
+- Fix the build with GCC 15 (Ubuntu 26.04): Indri's C sources are now compiled as gnu99;
+  GCC 15 defaults to C23, which rejects them. Verified in an Ubuntu 26.04 container
+  (GCC 15.2, CMake 4.2, Python 3.14): install, tests and docs examples all pass.
+- macOS is no longer listed as supported: the build fails there. CI runs it as a
+  non-blocking job until it is fixed.
+- CI: test on Python versions available on current runners; docs help text for `--limit`.
+
 ## 0.1.0 (2026-11-24)
 
 First release.
@@ -17,6 +26,6 @@ First release.
   crashes on the first indexed document when built with GCC 13).
 - Verified: rankings and scores identical to stock `IndriRunQuery` (`scripts/parity_check.py`).
 
-Known limits: Linux and macOS only (macOS untested); index paths longer than about 110
+Known limits: Linux only; index paths longer than about 110
 characters fail; numeric fields, priors and date operators are not exposed; an `Index` is not
 thread-safe.

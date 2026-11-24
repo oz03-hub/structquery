@@ -1,18 +1,19 @@
 name: test
 on:
   push:
+    branches: [main]
   pull_request:
 jobs:
-  test:
+  linux:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
-        python: ["3.9", "3.12"]
+        os: [ubuntu-24.04, ubuntu-latest]
+        python: ["3.12", "3.14"]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python }}
       - name: Install (compiles the bundled Indri, a few minutes)
@@ -21,3 +22,17 @@ jobs:
         run: python -m pytest -q tests
       - name: Check documentation examples
         run: python scripts/check_docs.py
+
+  # macOS does not build yet. Kept as a non-blocking job so its log is available for fixing it.
+  macos-experimental:
+    runs-on: macos-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: python -m pip install -v ".[test]"
+      - name: Test
+        run: python -m pytest -q tests

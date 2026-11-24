@@ -4,7 +4,7 @@ build-backend = "scikit_build_core.build"
 
 [project]
 name = "structquery"
-version = "0.1.0"
+version = "0.1.1"
 description = "Python API for the Indri search engine: build indexes and run Indri structured queries."
 readme = "README.md"
 requires-python = ">=3.9"
@@ -17,7 +17,6 @@ classifiers = [
   "Programming Language :: Python :: 3",
   "Programming Language :: C++",
   "Operating System :: POSIX :: Linux",
-  "Operating System :: MacOS",
   "Topic :: Text Processing :: Indexing",
   "Intended Audience :: Science/Research",
 ]

@@ -28,7 +28,7 @@ text on stderr, even with `--json`.
 
 ```console
 $ structquery --version
-structquery 0.1.0 (Indri release 5.21)
+structquery 0.1.1 (Indri release 5.21)
 $ structquery search; echo "exit code: $?"
 usage: structquery search [-h] [--queries QUERIES] [--qid-key QID_KEY]
                           [--query-key QUERY_KEY] [-k K] [--rule RULE]

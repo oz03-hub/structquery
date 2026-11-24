@@ -633,7 +633,7 @@ DEFAULT_RULE = 'method:dirichlet,mu:2500'
 FILE_CLASSES = ('txt', 'trectext', 'trecweb', 'trecalt', 'trecchar', 'html', 'xml', 'warc', 'warcchar', 'mbox', 'pdf', 'doc', 'ppt')
 STEMMERS = ('krovetz', 'porter')
 INDRI_VERSION = 'Indri release 5.21'
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 ```
 
 ## Signature index
@@ -726,5 +726,5 @@ DEFAULT_RULE = 'method:dirichlet,mu:2500'
 FILE_CLASSES = ('txt', 'trectext', 'trecweb', 'trecalt', 'trecchar', 'html', 'xml', 'warc', 'warcchar', 'mbox', 'pdf', 'doc', 'ppt')
 STEMMERS = ('krovetz', 'porter')
 INDRI_VERSION = 'Indri release 5.21'
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 ```

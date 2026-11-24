@@ -23,7 +23,7 @@ To build it you need:
 - zlib headers
 - Python >= 3.9
 
-Linux and macOS are supported. Windows is not. The build compiles the bundled Indri source and
+Linux is supported. macOS does not build yet, and Windows is not supported. The build compiles the bundled Indri source and
 takes roughly 2 to 4 minutes. If it fails, see [docs/troubleshooting.md](docs/troubleshooting.md).
 
 ## Quickstart

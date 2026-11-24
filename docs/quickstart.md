@@ -13,7 +13,7 @@ print(structquery.__version__, "/", structquery.INDRI_VERSION)
 ```
 
 ```text
-0.1.0 / Indri release 5.21
+0.1.1 / Indri release 5.21
 ```
 
 ## 1. Build an index from Python objects

@@ -24,7 +24,7 @@ from .batch import Run, batch_search, bag_of_words, extract_query
 from .index import DEFAULT_RULE, Document, Hit, Index, IndexStats, escape, is_valid, validate
 from .indexer import FILE_CLASSES, STEMMERS, IndexBuilder
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 __all__ = [
     "Index", "IndexBuilder", "Hit", "Document", "IndexStats", "Run",

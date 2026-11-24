@@ -27,7 +27,10 @@ file(GLOB INDRI_SOURCES CONFIGURE_DEPENDS
   "${INDRI_DIR}/contrib/xpdf/src/*.c")
 
 add_library(indri_static STATIC ${INDRI_SOURCES})
+# C is pinned to gnu99: GCC 15+ defaults to C23, where Indri's K&R-style declarations
+# (`int f();` called with arguments) no longer compile.
 set_target_properties(indri_static PROPERTIES
+  C_STANDARD 99 C_STANDARD_REQUIRED ON C_EXTENSIONS ON
   CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON CXX_EXTENSIONS ON
   C_VISIBILITY_PRESET hidden CXX_VISIBILITY_PRESET hidden)
 target_include_directories(indri_static PUBLIC
