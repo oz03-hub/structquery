@@ -176,7 +176,8 @@ False 4
 - `Index.get(docid)` raises `KeyError` when the docid is not in the index.
 - `Index.get_many([...])` fetches several documents in order.
 - Indri builds the snippet, and query terms appear in upper case in it.
-- For fielded documents, `Document.text` includes the `<field>` tags.
+- For fielded documents, `Document.text` includes the `<field>` tags, and `Document.fields`
+  gives back the `{name: text}` dict.
 
 ```python
 idx.close()

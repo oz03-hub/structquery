@@ -151,7 +151,7 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--stemmer", default="krovetz", choices=STEMMERS + ("none",))
     s.add_argument("--stopwords", help="file with one stopword per line (none by default)")
     s.add_argument("--memory", default="1G")
-    s.add_argument("--limit", type=int, help="only the first N lines of each JSONL file")
+    s.add_argument("--limit", type=int, help="only the first N documents of each JSONL file")
     s.add_argument("--no-store", action="store_true", help="do not store document text")
     s.add_argument("--overwrite", action="store_true")
     s.add_argument("--append", action="store_true")

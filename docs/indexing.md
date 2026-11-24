@@ -10,7 +10,7 @@ Every example on this page was run, and its output is shown under it.
 
 ```python no-run
 structquery.IndexBuilder(path, stemmer="krovetz", stopwords=None, fields=None, memory="1G",
-                     store_docs=True, overwrite=False, append=False)
+                         store_docs=True, overwrite=False, append=False)
 ```
 
 | Option | Default | Meaning |
@@ -342,13 +342,27 @@ amount of memory to use for internal structures" while indexing. The default is 
 `"512M"`, `"2G"`, `"1.5g"`. Units are binary, so `"1G"` is 2^30 bytes. On a cluster, keep it
 well below the memory of your job allocation.
 
+`memory` bounds only that in-memory index buffer, not the whole process. Large documents in
+particular need memory of their own, so the process can use several times more than
+`memory`; see the measurement in [Size and time](#size-and-time).
+
 ## Size and time
 
 Indexing speed and index size depend on the corpus. Measure them on yours:
 `structquery index --json` reports `"seconds"`, and `du -sh INDEX_DIR` gives the size.
 The 8-document examples on these pages each index in well under a second.
 
-Measured on BrowseComp-Plus (100,195 documents, 3.3 GB of JSONL, 523M tokens): indexing
-took 464 s on one core with `memory="4G"`.
+One larger data point, from a single run, is below. Treat it as an example, not a guarantee.
+The corpus was BrowseComp-Plus: 100,195 web documents, 3.3 GB of JSONL, 523 million tokens and
+3.85 million unique terms.
 
-TODO(numbers): BrowseComp-Plus index size on disk, peak memory, query throughput with N workers, and retrieval quality.
+| Measure | Result |
+|---|---|
+| Indexing time | 464 s on one core of a shared cluster node, with `memory="4G"` and Krovetz stemming |
+| Index size on disk | 3.6 GB |
+| Peak process memory while indexing | about 15.6 GB |
+| Searching | 830 long natural-language questions (bag-of-words `#combine`, `k=1000`) in 540 s with 4 worker processes |
+
+Peak memory was far above the `memory="4G"` setting. That setting bounds only Indri's
+in-memory index buffer, and this corpus contains single documents of up to 10 MB. Smoke-test
+on your own corpus and request job memory based on the peak you measure, not on `memory=`.

@@ -104,8 +104,10 @@ Checklist:
    `word.Title` silently match nothing. Compare with `idx.fields`. A dict key that was not
    listed in `fields=` at build time is searchable only as plain text, not as a field.
 3. **Punctuation inside words.** Indri indexes "U.S." as `us`, "don't" as `dont`, and
-   "e-mail" as `e` `mail`. Query `us`, `dont`, `e-mail` or `#1(e mail)` (`escape` produces
-   these forms). Do not query `U S` or `don t`. `U.S` without the final dot means term `u` in a field named `s`.
+   "e-mail" as `e` `mail`. Query `us`, `dont`, `e-mail` or `#1(e mail)`. `escape` produces
+   `US` and `dont`. For "e-mail" it produces `e mail`, which is two separate terms and not the
+   phrase, so write `#1(e mail)` yourself when the phrase matters. Do not query `U S` or
+   `don t`. `U.S` without the final dot means term `u` in a field named `s`.
 4. **Too strict an operator.** `#band`, `#filreq`, `#1` and small `#uwN` windows all drop
    documents. Try `#combine` over the same words.
 5. **Stopwords.** If the index was built with `stopwords=`, a query made only of stopwords
@@ -133,7 +135,9 @@ gives you one.
 - **Storage.** Write the index to fast local or scratch storage, not to a slow network home
   or project directory. Indexing writes many temporary files.
 - **Memory.** A larger `memory=` budget (for example `"4G"`) lets Indri buffer more before
-  writing to disk. Keep it well below the memory your job was allocated.
+  writing to disk. Keep it well below the memory your job was allocated. It bounds only that
+  buffer: the whole process can use several times more (see
+  [indexing.md](indexing.md#size-and-time)).
 - **Stored text.** `store_docs=False` writes less data, but then `get`, `docs=True` and
   snippets stop working.
 - **No parallel writers.** `IndexBuilder` is not thread-safe, and one index is built by one
@@ -162,7 +166,7 @@ Compute belongs on compute nodes. On a shared cluster:
 ```python no-run
 import os
 run = structquery.batch_search(index_path, queries, k=1000,
-                           workers=int(os.environ.get("SLURM_CPUS_PER_TASK", "1")))
+                               workers=int(os.environ.get("SLURM_CPUS_PER_TASK", "1")))
 ```
 
 A job script that indexes a JSONL corpus and runs a query set:
@@ -186,4 +190,7 @@ structquery search "$WS/index" --queries queries.tsv -k 1000 \
 ```
 
 Run a smoke test first: add `--limit 1000` to `structquery index`, and use a short `--time`.
+Base `--mem` on the peak memory you measure (for example with
+`sacct -j JOBID -o JobID,MaxRSS`), not on `--memory`; see
+[indexing.md](indexing.md#size-and-time).
 `scripts/browsecompplus.sbatch` in this repository is a complete example.

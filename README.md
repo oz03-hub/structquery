@@ -9,11 +9,11 @@ in `third_party/indri`.
 
 ## Install
 
-There is no PyPI package and no published repository yet. Install from source:
+There is no PyPI package. Install from source:
 
 ```bash
 pip install .                      # from a checkout
-pip install git+<repo-url>         # placeholder: no public repository yet
+pip install git+https://github.com/oz03-hub/structquery
 ```
 
 To build it you need:
@@ -31,7 +31,7 @@ takes roughly 2 to 4 minutes. If it fails, see [docs/troubleshooting.md](docs/tr
 ```python
 import structquery
 
-with structquery.IndexBuilder("my_index", fields=["title"]) as b:      # the index is ready when the block exits
+with structquery.IndexBuilder("my_index", fields=["title"]) as b:   # the index is ready when the block exits
     b.add("d1", {"title": "White House", "body": "The press secretary spoke at the White House."})
     b.add("d2", {"title": "Housing", "body": "House prices rose; the white paint was new."})
     b.add("d3", "Cats chase dogs.")                                 # plain text works too

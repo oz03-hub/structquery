@@ -9,6 +9,7 @@ description = "Python API for the Indri search engine: build indexes and run Ind
 readme = "README.md"
 requires-python = ">=3.9"
 license = "MIT"
+authors = [{ name = "Ozel Yilmazel" }]
 license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md", "third_party/indri/LICENSE.txt"]
 keywords = ["information retrieval", "indri", "lemur", "search", "query language"]
 classifiers = [
@@ -21,6 +22,12 @@ classifiers = [
   "Intended Audience :: Science/Research",
 ]
 dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/oz03-hub/structquery"
+Documentation = "https://github.com/oz03-hub/structquery/tree/main/docs"
+Issues = "https://github.com/oz03-hub/structquery/issues"
+Changelog = "https://github.com/oz03-hub/structquery/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 test = ["pytest>=7"]

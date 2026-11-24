@@ -31,11 +31,12 @@ $ structquery --version
 structquery 0.1.0 (Indri release 5.21)
 $ structquery search; echo "exit code: $?"
 usage: structquery search [-h] [--queries QUERIES] [--qid-key QID_KEY]
-                      [--query-key QUERY_KEY] [-k K] [--rule RULE] [--docs]
-                      [--snippets] [--max-chars MAX_CHARS] [--workers WORKERS]
-                      [--on-error {skip,fallback,raise}] [--output OUTPUT]
-                      [--tag TAG] [--json]
-                      index [query]
+                          [--query-key QUERY_KEY] [-k K] [--rule RULE]
+                          [--docs] [--snippets] [--max-chars MAX_CHARS]
+                          [--workers WORKERS]
+                          [--on-error {skip,fallback,raise}] [--output OUTPUT]
+                          [--tag TAG] [--json]
+                          index [query]
 structquery search: error: the following arguments are required: index
 exit code: 1
 ```
@@ -76,12 +77,15 @@ of
 ## structquery index
 
 ```text
-structquery index [-h] [--format {jsonl,txt,trectext,trecweb,trecalt,trecchar,html,xml,warc,warcchar,mbox,pdf,doc,ppt}]
-              [--id-key ID_KEY] [--text-key TEXT_KEY [TEXT_KEY ...]]
-              [--field FIELD] [--stemmer {krovetz,porter,none}]
-              [--stopwords STOPWORDS] [--memory MEMORY] [--limit LIMIT]
-              [--no-store] [--overwrite] [--append] [--json]
-              index input [input ...]
+structquery index [-h]
+                  [--format {jsonl,txt,trectext,trecweb,trecalt,trecchar,html,xml,warc,warcchar,mbox,pdf,doc,ppt}]
+                  [--id-key ID_KEY]
+                  [--text-key TEXT_KEY [TEXT_KEY ...]] [--field FIELD]
+                  [--stemmer {krovetz,porter,none}]
+                  [--stopwords STOPWORDS] [--memory MEMORY]
+                  [--limit LIMIT] [--no-store] [--overwrite] [--append]
+                  [--json]
+                  index input [input ...]
 ```
 
 | Argument | Default | Meaning |
@@ -95,7 +99,7 @@ structquery index [-h] [--format {jsonl,txt,trectext,trecweb,trecalt,trecchar,ht
 | `--stemmer` | `krovetz` | `krovetz`, `porter` or `none` |
 | `--stopwords FILE` | none | file with one stopword per line |
 | `--memory` | `1G` | indexing memory budget, e.g. `512M`, `4G` |
-| `--limit N` | none | only the first N documents of each JSONL file (the `--help` text still says "lines"; blank lines are not counted) |
+| `--limit N` | none | only the first N documents of each JSONL file (blank lines are not counted) |
 | `--no-store` | off | do not store document text (`doc`, `--docs` and `--snippets` will fail) |
 | `--overwrite` | off | replace an existing index |
 | `--append` | off | add to an existing index |
@@ -135,11 +139,12 @@ is still created. Rerun with `--overwrite`.
 
 ```text
 structquery search [-h] [--queries QUERIES] [--qid-key QID_KEY]
-               [--query-key QUERY_KEY] [-k K] [--rule RULE] [--docs]
-               [--snippets] [--max-chars MAX_CHARS] [--workers WORKERS]
-               [--on-error {skip,fallback,raise}] [--output OUTPUT]
-               [--tag TAG] [--json]
-               index [query]
+                   [--query-key QUERY_KEY] [-k K] [--rule RULE]
+                   [--docs] [--snippets] [--max-chars MAX_CHARS]
+                   [--workers WORKERS]
+                   [--on-error {skip,fallback,raise}] [--output OUTPUT]
+                   [--tag TAG] [--json]
+                   index [query]
 ```
 
 | Argument | Default | Meaning |
@@ -162,7 +167,9 @@ structquery search [-h] [--queries QUERIES] [--qid-key QID_KEY]
 
 ### One query
 
-Text mode prints `rank<TAB>docid<TAB>score`:
+Text mode prints `rank<TAB>docid<TAB>score`. With `--snippets` the snippet is added as a
+fourth column, as a Python string literal. With `--docs` the document text follows on its own
+lines, cut to `--max-chars` characters (`...` marks a cut), and then a blank line:
 
 ```console
 $ structquery search my_index '#combine(white house)' -k 2
@@ -173,6 +180,7 @@ $ structquery search my_index '#combine(white house)' -k 1 --docs --snippets --m
 <title>
 White House press briefing
 </tit...
+
 $ structquery search my_index '#combine(white house)' -k 1 --json
 {"query": "#combine(white house)", "hits": [{"docid": "d3", "score": -3.02507644113269, "rank": 1, "text": null, "snippet": null, "internal_id": 3}]}
 $ structquery search my_index '#combine(white house'; echo "exit code: $?"

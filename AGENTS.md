@@ -65,10 +65,11 @@ Shared HPC machine: do heavy work inside a Slurm allocation and keep to at most 
 processes.
 
 ```bash
-source .venv/bin/activate                         # from the repo root
+source .venv/bin/activate                          # from the repo root
 PYTHONPATH=src python your_script.py               # use the in-place build in src/structquery
-PYTHONPATH=src python -m structquery --help            # the CLI (installed name: structquery)
+PYTHONPATH=src python -m structquery --help        # the CLI (installed name: structquery)
 PYTHONPATH=src python -m pytest tests              # tests (needs pytest; see note below)
+PYTHONPATH=src python scripts/check_docs.py        # run every example in the docs, compare output
 pip install .                                      # full build+install, ~2-4 min; only when asked
 ```
 
@@ -96,6 +97,6 @@ pytest is installed in `.venv`; `pyproject.toml` lists it as the `test` extra fo
 | `third_party/indri/` | vendored Indri 5.21 source and its `LICENSE.txt` |
 | `third_party/patches/` | the only changes made to the Indri source |
 | `tests/` | pytest suite |
-| `scripts/` | Slurm job scripts, `parity_check.py` (comparison with stock IndriRunQuery) |
+| `scripts/` | Slurm job scripts, `parity_check.py` (comparison with stock IndriRunQuery), `check_docs.py` (runs the doc examples) |
 | `examples/` | `quickstart.py`, `llm_query_loop.py`, `browsecompplus_eval.py` |
 | `docs/` | quickstart, query-language, indexing, api, cli, troubleshooting |

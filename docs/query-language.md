@@ -481,8 +481,9 @@ IndriError ... named prior: date not found in Repository. Unable to process quer
 
 ### Turning text into safe terms
 
-`structquery.escape(text)` replaces every character that is not a letter, digit or whitespace
-with a space. The result always parses inside an operator. `structquery.bag_of_words(text)`
+`structquery.escape(text)` joins dotted acronyms and contractions ("U.S." becomes `US`,
+"what's" becomes `whats`), then replaces every other character that is not a letter, digit or
+whitespace with a space. The result always parses inside an operator. `structquery.bag_of_words(text)`
 returns `#combine(...)` over those words, after dropping `#operator` names. It is useful as a
 fallback for a broken query.
 

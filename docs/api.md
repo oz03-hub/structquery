@@ -300,11 +300,14 @@ A stored document, returned by `Index.get` and `Index.get_many`. It is a frozen 
 | `raw` | the complete stored record. It is the same as `text` for documents added with `add`; for TREC files it also has the `<DOC>` wrapper. |
 
 ```python
-print(repr(idx.get("d1").text))
+d1 = idx.get("d1")
+print(repr(d1.text))
+print(d1.fields, idx.get("d3").fields)
 ```
 
 ```text
 '<title>\nWhite House\n</title>\n<body>\nThe press secretary spoke at the White House.\n</body>\n'
+{'title': 'White House', 'body': 'The press secretary spoke at the White House.'} {}
 ```
 
 ## IndexStats
