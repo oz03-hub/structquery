@@ -1,0 +1,38 @@
+[build-system]
+requires = ["scikit-build-core>=0.10", "pybind11>=2.12"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "structquery"
+version = "0.1.0"
+description = "Python API for the Indri search engine: build indexes and run Indri structured queries."
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md", "third_party/indri/LICENSE.txt"]
+keywords = ["information retrieval", "indri", "lemur", "search", "query language"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: C++",
+  "Operating System :: POSIX :: Linux",
+  "Operating System :: MacOS",
+  "Topic :: Text Processing :: Indexing",
+  "Intended Audience :: Science/Research",
+]
+dependencies = []
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[project.scripts]
+structquery = "structquery.cli:main"
+
+[tool.scikit-build]
+wheel.packages = ["src/structquery"]
+cmake.build-type = "Release"
+build-dir = "build/{wheel_tag}"
+sdist.include = ["third_party/indri/**"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

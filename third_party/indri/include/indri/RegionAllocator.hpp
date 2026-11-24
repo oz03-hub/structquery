@@ -53,7 +53,7 @@ namespace indri
           return _malloced.back();
         }
     
-        bytes = (bytes+7) & ~7; // round up
+        bytes = (bytes+15) & ~((size_t)15); // round up to 16: objects placed here may need 16-byte alignment (structquery patch 0001)
     
         if( _buffers.size() && _buffers.back()->remaining() >= bytes ) {
           return _buffers.back()->write( bytes );

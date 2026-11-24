@@ -1,0 +1,11 @@
+/scratchspace
+/.venv/
+/build/
+/dist/
+/wheelhouse/
+/_skbuild/
+*.egg-info/
+__pycache__/
+/src/structquery/*.so
+.pytest_cache/
+/logs/

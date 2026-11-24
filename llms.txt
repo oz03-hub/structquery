@@ -1,0 +1,44 @@
+# structquery
+
+> Python binding (pybind11) for the Indri 5.21 search engine: build Indri indexes and run Indri structured queries (#combine, #weight, #1, #uwN, #syn, #band, #filreq/#filrej, term.field, #combine[field]) from Python or the `structquery` CLI. All tokenizing, stemming and scoring is Indri's own. Install from source with `pip install .` (needs a C++ compiler, CMake >= 3.18 and zlib; Linux/macOS). Scores under the default rule are negative log-probabilities, and higher is better. Validate LLM-written queries with `structquery.validate` before running them.
+
+Minimal working example:
+
+```python
+import structquery
+
+with structquery.IndexBuilder("my_index", fields=["title"]) as b:
+    b.add("d1", {"title": "White House", "body": "The press secretary spoke at the White House."})
+    b.add("d2", "Cats chase dogs.")
+
+idx = structquery.Index("my_index")
+query = structquery.extract_query("Answer: <query>#combine(#1(white house) press)</query>")
+try:
+    structquery.validate(query)                       # raises structquery.QuerySyntaxError
+    for h in idx.search(query, k=5):
+        print(h.rank, h.docid, round(h.score, 3))
+except structquery.QuerySyntaxError as e:
+    print("send back to the model:", e)
+```
+
+## Docs
+
+- [README](README.md): what structquery is, install, quickstart, LLM `<query>` loop, API table
+- [Quickstart](docs/quickstart.md): index from Python, JSONL or TREC files; search; documents and snippets; TREC runs; qrels evaluation
+- [Query language](docs/query-language.md): every verified operator with results, the exact parse errors and their fixes, surprises, and a ready-to-paste LLM prompt
+- [Indexing](docs/indexing.md): IndexBuilder options, plain vs fielded documents, file classes, stemmers, stopwords, overwrite/append
+- [API reference](docs/api.md): every public name with its signature, arguments, return type, exceptions and an example
+- [CLI](docs/cli.md): `structquery index/search/validate/stats/doc`, flags, exit codes, `--json` shapes
+- [Troubleshooting](docs/troubleshooting.md): build failures, FileExistsError, KeyError, empty results, speed, Slurm clusters
+
+## For agents
+
+- [AGENTS.md](AGENTS.md): a "to do X, call Y" table, 10 rules, build/test commands, repo map
+
+## Optional
+
+- [examples/quickstart.py](examples/quickstart.py): runnable end-to-end script
+- [examples/llm_query_loop.py](examples/llm_query_loop.py): extract, validate, search, feedback loop with a swappable LLM call
+- [structquery licence (MIT)](LICENSE)
+- [Third-party notices](THIRD_PARTY_NOTICES.md)
+- [Indri licence](third_party/indri/LICENSE.txt)
